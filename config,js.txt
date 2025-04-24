@@ -1,0 +1,4 @@
+mkdir echanj_lajan
+cd echanj_lajan
+npm init -y
+npm install express mongoose dotenv body-parser

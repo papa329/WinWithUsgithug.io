@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plans d'Investissement</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+        }
+        
+        .plans-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .plan {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 30px;
+            width: 300px;
+            transition: transform 0.3s;
+        }
+        
+        .plan:hover {
+            transform: translateY(-10px);
+        }
+        
+        .plan.basic {
+            border-top: 5px solid #3498db;
+        }
+        
+        .plan.premium {
+            border-top: 5px solid #f39c12;
+        }
+        
+        .plan.platinium {
+            border-top: 5px solid #9b59b6;
+        }
+        
+        .plan-name {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .plan-price {
+            font-size: 2.5em;
+            text-align: center;
+            margin: 20px 0;
+            color: #2c3e50;
+        }
+        
+        .plan-features {
+            list-style-type: none;
+            padding: 0;
+            margin-bottom: 30px;
+        }
+        
+        .plan-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+        
+        .plan-features li:before {
+            content: "✓";
+            color: #2ecc71;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .plan-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .basic .plan-button {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .premium .plan-button {
+            background-color: #f39c12;
+            color: white;
+        }
+        
+        .platinium .plan-button {
+            background-color: #9b59b6;
+            color: white;
+        }
+        
+        .plan-button:hover {
+            opacity: 0.9;
+        }
+        
+        .highlight {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Choisissez Votre Plan d'Investissement</h1>
+        <p>Investissez aujourd'hui pour un avenir meilleur</p>
+    </div>
+    
+    <div class="plans-container">
+        <!-- Plan Basic -->
+        <div class="plan basic">
+            <div class="plan-name">Basic</div>
+            <div class="plan-price">10$</div>
+            <ul class="plan-features">
+                <li><span class="highlight">10,000 GDS</span> de capital</li>
+                <li>Retraits <span class="highlight">5 fois/mois</span></li>
+                <li>Profit mensuel: <span class="highlight">76$ USDT</span></li>
+                <li>Support technique de base</li>
+                <li>Accès aux rapports hebdomadaires</li>
+            </ul>
+            <button class="plan-button">Choisir ce plan</button>
+        </div>
+        
+        <!-- Plan Premium -->
+        <div class="plan premium">
+            <div class="plan-name">Premium</div>
+            <div class="plan-price">49$</div>
+            <ul class="plan-features">
+                <li><span class="highlight">25,000 GDS</span> de capital</li>
+                <li>Retraits <span class="highlight">10 fois/mois</span></li>
+                <li>Profit mensuel: <span class="highlight">192$ USDT</span></li>
+                <li>Support technique prioritaire</li>
+                <li>Accès aux rapports quotidiens</li>
+                <li>Analyse de marché mensuelle</li>
+            </ul>
+            <button class="plan-button">Choisir ce plan</button>
+        </div>
+        
+        <!-- Plan Platinium -->
+        <div class="plan platinium">
+            <div class="plan-name">Platinium</div>
+            <div class="plan-price">99$</div>
+            <ul class="plan-features">
+                <li><span class="highlight">50,000 GDS</span> de capital</li>
+                <li>Retraits <span class="highlight">15 fois/mois</span></li>
+                <li>Profit mensuel: <span class="highlight">384$ USDT</span></li>
+                <li>Support technique 24/7</li>
+                <li>Rapports en temps réel</li>
+                <li>Analyse de marché hebdomadaire</li>
+                <li>Accès aux opportunités exclusives</li>
+            </ul>
+            <button class="plan-button">Choisir ce plan</button>
+        </div>
+    </div>
+</body>
+</html>

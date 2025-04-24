@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MonterreyFood - Delivery de Comida en Monterrey Centro</title>
+    <style>
+        /* Reset y estilos base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* Header */
+        header {
+            background-color: #e63946;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            color: #ffd166;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            color: #ffd166;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 2rem;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 700px;
+        }
+        
+        .search-bar {
+            display: flex;
+            width: 100%;
+            max-width: 600px;
+        }
+        
+        .search-bar input {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+        }
+        
+        .search-bar button {
+            background-color: #e63946;
+            color: white;
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .search-bar button:hover {
+            background-color: #c1121f;
+        }
+        
+        /* Sección de categorías */
+        .categories {
+            padding: 3rem 2rem;
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            color: #333;
+        }
+        
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .category-card {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .category-img {
+            height: 120px;
+            background-color: #ddd;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .category-info {
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .category-info h3 {
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        /* Sección de restaurantes populares */
+        .popular-restaurants {
+            padding: 3rem 2rem;
+            background-color: #f5f5f5;
+        }
+        
+        .restaurant-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .restaurant-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .restaurant-img {
+            height: 180px;
+            background-color: #ddd;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .rating {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .rating span {
+            color: #ffd166;
+            margin-right: 0.3rem;
+        }
+        
+        .restaurant-info {
+            padding: 1.2rem;
+        }
+        
+        .restaurant-info h3 {
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .restaurant-info p {
+            color: #666;
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+        }
+        
+        .delivery-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .price {
+            font-weight: bold;
+            color: #e63946;
+        }
+        
+        /* Sección de cómo funciona */
+        .how-it-works {
+            padding: 3rem 2rem;
+            background-color: white;
+            text-align: center;
+        }
+        
+        .steps {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .step {
+            flex: 1;
+            min-width: 200px;
+            max-width: 300px;
+            margin: 1rem;
+            padding: 1.5rem;
+        }
+        
+        .step-icon {
+            font-size: 2.5rem;
+            color: #e63946;
+            margin-bottom: 1rem;
+        }
+        
+        .step h3 {
+            margin-bottom: 0.8rem;
+            color: #333;
+        }
+        
+        .step p {
+            color: #666;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #1d3557;
+            color: white;
+            padding: 3rem 2rem 1.5rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            color: #ffd166;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-column ul li a {
+            color: #f1faee;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column ul li a:hover {
+            color: #ffd166;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: #ffd166;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #a8dadc;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .logo {
+                margin-bottom: 1rem;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .steps {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+        /* Modal de restaurante */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 2rem auto;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 8px;
+            overflow: hidden;
+            animation: modalFadeIn 0.3s;
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-header {
+            position: relative;
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        
+        .modal-body {
+            padding: 2rem;
+        }
+        
+        .restaurant-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .restaurant-title h2 {
+            color: #333;
+        }
+        
+        .menu-section {
+            margin-bottom: 2rem;
+        }
+        
+        .menu-section h3 {
+            color: #e63946;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px dashed #eee;
+        }
+        
+        .item-info {
+            flex: 1;
+        }
+        
+        .item-info h4 {
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .item-info p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .item-price {
+            font-weight: bold;
+            color: #e63946;
+            margin-left: 1rem;
+        }
+        
+        .add-to-cart {
+            background-color: #e63946;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .add-to-cart:hover {
+            background-color: #c1121f;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">Monterrey<span>Food</span></div>
+        <nav>
+            <ul>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#restaurantes">Restaurantes</a></li>
+                <li><a href="#como-funciona">Cómo funciona</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <h1>La mejor comida de Monterrey a tu puerta</h1>
+        <p>Pide de tus restaurantes favoritos en Monterrey Centro y recibe en minutos</p>
+        <div class="search-bar">
+            <input type="text" placeholder="¿Qué te apetece hoy?">
+            <button>Buscar</button>
+        </div>
+    </section>
+
+    <!-- Sección de categorías -->
+    <section class="categories">
+        <h2 class="section-title">Explora por categorías</h2>
+        <div class="category-grid">
+            <div class="category-card" onclick="filterRestaurants('mexicana')">
+                <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                <div class="category-info">
+                    <h3>Mexicana</h3>
+                    <p>Platos tradicionales</p>
+                </div>
+            </div>
+            <div class="category-card" onclick="filterRestaurants('italiana')">
+                <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1533777324565-a040eb52facd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                <div class="category-info">
+                    <h3>Italiana</h3>
+                    <p>Pastas y pizzas</p>
+                </div>
+            </div>
+            <div class="category-card" onclick="filterRestaurants('asiatica')">
+                <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                <div class="category-info">
+                    <h3>Asiática</h3>
+                    <p>Sushi y más</p>
+                </div>
+            </div>
+            <div class="category-card" onclick="filterRestaurants('hamburguesas')">
+                <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                <div class="category-info">
+                    <h3>Hamburguesas</h3>
+                    <p>Clásicas y gourmet</p>
+                </div>
+            </div>
+            <div class="category-card" onclick="filterRestaurants('postres')">
+                <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                <div class="category-info">
+                    <h3>Postres</h3>
+                    <p>Dulces tentaciones</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de restaurantes populares -->
+    <section class="popular-restaurants" id="restaurantes">
+        <h2 class="section-title">Restaurantes populares en Monterrey Centro</h2>
+        <div class="restaurant-grid" id="restaurant-container">
+            <!-- Los restaurantes se cargarán aquí con JavaScript -->
+        </div>
+    </section>
+
+    <!-- Sección de cómo funciona -->
+    <section class="how-it-works" id="como-funciona">
+        <h2 class="section-title">Cómo funciona MonterreyFood</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-icon">📍</div>
+                <h3>1. Elige tu ubicación</h3>
+                <p>Ingresa tu dirección en Monterrey Centro para ver los restaurantes disponibles en tu zona.</p>
+            </div>
+            <div class="step">
+                <div class="step-icon">🍔</div>
+                <h3>2. Selecciona tu comida</h3>
+                <p>Explora los menús de los restaurantes y añade tus platillos favoritos al carrito.</p>
+            </div>
+            <div class="step">
+                <div class="step-icon">🚀</div>
+                <h3>3. Recibe tu pedido</h3>
+                <p>Relájate mientras preparamos y entregamos tu comida en la puerta de tu hogar u oficina.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contacto">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>MonterreyFood</h3>
+                <p>El servicio de delivery de comida más rápido y confiable en Monterrey Centro.</p>
+                <div class="social-links">
+                    <a href="#"><i>📱</i></a>
+                    <a href="#"><i>📘</i></a>
+                    <a href="#"><i>📸</i></a>
+                    <a href="#"><i>🐦</i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Compañía</h3>
+                <ul>
+                    <li><a href="#">Acerca de nosotros</a></li>
+                    <li><a href="#">Trabaja con nosotros</a></li>
+                    <li><a href="#">Restaurantes asociados</a></li>
+                    <li><a href="#">Términos y condiciones</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Ayuda</h3>
+                <ul>
+                    <li><a href="#">Preguntas frecuentes</a></li>
+                    <li><a href="#">Contacto</a></li>
+                    <li><a href="#">Política de privacidad</a></li>
+                    <li><a href="#">Métodos de pago</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Zonas de cobertura</h3>
+                <ul>
+                    <li><a href="#">Monterrey Centro</a></li>
+                    <li><a href="#">Barrio Antiguo</a></li>
+                    <li><a href="#">San Pedro</a></li>
+                    <li><a href="#">Contry</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 MonterreyFood. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Modal de restaurante -->
+    <div class="modal" id="restaurant-modal">
+        <div class="modal-content">
+            <div class="modal-header" id="modal-header-img">
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="restaurant-title">
+                    <h2 id="modal-restaurant-name">Nombre del Restaurante</h2>
+                    <div class="rating">
+                        <span>★</span> <span id="modal-restaurant-rating">4.8</span>
+                    </div>
+                </div>
+                <p id="modal-restaurant-description">Descripción del restaurante.</p>
+                
+                <div class="menu-section">
+                    <h3>Entradas</h3>
+                    <div class="menu-item">
+                        <div class="item-info">
+                            <h4>Guacamole</h4>
+                            <p>Guacamole fresco con totopos y salsa verde.</p>
+                        </div>
+                        <div class="item-price">$85</div>
+                        <button class="add-to-cart">Añadir</button>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-info">
+                            <h4>Queso fundido</h4>
+                            <p>Queso Chihuahua derretido con chorizo.</p>
+                        </div>
+                        <div class="item-price">$95</div>
+                        <button class="add-to-cart">Añadir</button>
+                    </div>
+                </div>
+                
+                <div class="menu-section">
+                    <h3>Platos principales</h3>
+                    <div class="menu-item">
+                        <div class="item-info">
+                            <h4>Enchiladas verdes</h4>
+                            <p>3 enchiladas bañadas en salsa verde con pollo.</p>
+                        </div>
+                        <div class="item-price">$120</div>
+                        <button class="add-to-cart">Añadir</button>
+                    </div>
+                    <div class="menu-item">
+                        <div class="item-info">
+                            <h4>Chiles en nogada</h4>
+                            <p>Chile poblano relleno de picadillo con nogada.</p>
+                        </div>
+                        <div class="item-price">$150</div>
+                        <button class="add-to-cart">Añadir</button>
+                    </div>
+                </div>
+                
+                <div class="menu-section">
+                    <h3>Postres</h3>
+                    <div class="menu-item">
+                        <div class="item-info">
+                            <h4>Flan napolitano</h4>
+                            <p>Flan casero con caramelo.</p>
+                        </div>
+                        <div class="item-price">$65</div>
+                        <button class="add-to-cart">Añadir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Datos de restaurantes
+        const restaurants = [
+            {
+                id: 1,
+                name: "La Nacional Carnes Asadas",
+                category: "mexicana",
+                description: "Las mejores carnes asadas y platillos norteños de Monterrey",
+                rating: 4.7,
+                deliveryTime: "25-35 min",
+                price: "$$",
+                image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+            },
+            {
+                id: 2,
+                name: "Pasta Fresca Italian Kitchen",
+                category: "italiana",
+                description: "Auténtica cocina italiana con ingredientes frescos",
+                rating: 4.5,
+                deliveryTime: "30-40 min",
+                price: "$$$",
+                image: "https://images.unsplash.com/photo-1600628421060-939639517883?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+            },
+            {
+                id: 3,
+                name: "Sushi Express Monterrey",
+                category: "asiatica",
+                description: "Sushi fresco y delicioso con entrega rápida",
+                rating: 4.6,
+                deliveryTime: "20-30 min",
+                price: "$$",
+                image: "https://images.unsplash.com/photo-1580822184713-fc5400e7fe10?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+            },
+            {
+                id: 4,
+                name: "Burger Factory",
+                category: "hamburguesas",
+                description: "Hamburguesas gourmet con ingredientes premium",
+                rating: 4.8,
+                deliveryTime: "15-25 min",
+                price: "$$",
+                image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+            },
+            {
+                id: 5,
+                name: "El Pato Feliz",
+                category: "mexicana",
+                description: "Comida mexicana tradicional con un toque moderno",
+                rating: 4.4,
+                deliveryTime: "35-45 min",
+                price: "$$",
+                image: "https://images.unsplash.com/photo-1547592180-85f173990554?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+            },
+            {
+                id: 6,
+                name: "Dulce Tentación",
+                category: "postres",
+                description: "Postres artesanales y café de especialidad",
+                rating: 4.9,
+                deliveryTime: "20-30 min",
+                price: "$",
+                image: "https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+            }
+        ];
+
+        // Cargar restaurantes al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            renderRestaurants(restaurants);
+        });
+
+        // Función para renderizar restaurantes
+        function renderRestaurants(restaurantsToRender) {
+            const container = document.getElementById('restaurant-container');
+            container.innerHTML = '';
+            
+            restaurantsToRender.forEach(restaurant => {
+                const restaurantCard = document.createElement('div');
+                restaurantCard.className = 'restaurant-card';
+                restaurantCard.onclick = () => openRestaurantModal(restaurant);
+                
+                restaurantCard.innerHTML = `
+                    <div class="restaurant-img" style="background-image: url('${restaurant.image}')">
+                        <div class="rating">
+                            <span>★</span> ${restaurant.rating}
+                        </div>
+                    </div>
+                    <div class="restaurant-info">
+                        <h3>${restaurant.name}</h3>
+                        <p>${restaurant.description}</p>
+                        <div class="delivery-info">
+                            <span>${restaurant.deliveryTime}</span>
+                            <span class="price">${restaurant.price}</span>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(restaurantCard);
+            });
+        }
+
+        // Función para filtrar restaurantes por categoría
+        function filterRestaurants(category) {
+            if (category === 'todos') {
+                renderRestaurants(restaurants);
+            } else {
+                const filtered = restaurants.filter(restaurant => restaurant.category === category);
+                renderRestaurants(filtered);
+            }
+        }
+
+        // Función para abrir el modal del restaurante
+        function openRestaurantModal(restaurant) {
+            const modal = document.getElementById('restaurant-modal');
+            const headerImg = document.getElementById('modal-header-img');
+            const name = document.getElementById('modal-restaurant-name');
+            const rating = document.getElementById('modal-restaurant-rating');
+            const description = document.getElementById('modal-restaurant-description');
+            
+            headerImg.style.backgroundImage = `url('${restaurant.image}')`;
+            name.textContent = restaurant.name;
+            rating.textContent = restaurant.rating;
+            description.textContent = restaurant.description;
+            
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Función para cerrar el modal
+        function closeModal() {
+            const modal = document.getElementById('restaurant-modal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Cerrar modal al hacer clic fuera del contenido
+        window.onclick = function(event) {
+            const modal = document.getElementById('restaurant-modal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Función para añadir al carrito (simulada)
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function() {
+                alert('Artículo añadido al carrito');
+            });
+        });
+    </script>
+</body>
+</html>

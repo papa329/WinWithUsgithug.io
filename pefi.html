@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PeFi Haiti - Plateforme de Prêt P2P</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #27ae60;
+            --warning: #f39c12;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .auth-buttons .btn {
+            margin-left: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-login {
+            background-color: transparent;
+            color: white;
+            border: 1px solid white;
+        }
+        
+        .btn-login:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn-signup {
+            background-color: var(--secondary);
+            color: white;
+            border: 1px solid var(--secondary);
+        }
+        
+        .btn-signup:hover {
+            background-color: #2980b9;
+            border-color: #2980b9;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .hero-buttons .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        /* Calculator Section */
+        .calculator-section {
+            padding: 3rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary);
+        }
+        
+        .calculator-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .calculator-form {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--secondary);
+            outline: none;
+        }
+        
+        .range-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .range-container input[type="range"] {
+            flex: 1;
+        }
+        
+        .range-value {
+            min-width: 50px;
+            text-align: right;
+        }
+        
+        .btn-calculate {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-calculate:hover {
+            background-color: #2980b9;
+        }
+        
+        .calculator-results {
+            flex: 1;
+            min-width: 300px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+        
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .result-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .result-label {
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .result-value {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .amortization-btn {
+            background-color: transparent;
+            color: var(--secondary);
+            border: none;
+            font-weight: 500;
+            margin-top: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 3rem 2rem;
+            background-color: white;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .feature-card {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .feature-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        /* How It Works */
+        .how-it-works {
+            padding: 3rem 2rem;
+            background-color: #f5f5f5;
+        }
+        
+        .steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .step {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            line-height: 40px;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 3rem 2rem;
+            background-color: white;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .testimonial-card {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .author-info h4 {
+            margin-bottom: 0.2rem;
+            color: var(--primary);
+        }
+        
+        .author-info p {
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 2rem 1rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .footer-title {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .partner-logos {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .partner-title {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #ddd;
+        }
+        
+        .logo-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .logo-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 50px;
+            filter: grayscale(100%) brightness(150%);
+            opacity: 0.8;
+            transition: all 0.3s;
+        }
+        
+        .logo-item:hover {
+            filter: grayscale(0%) brightness(100%);
+            opacity: 1;
+        }
+        
+        .logo-item img {
+            max-height: 100%;
+            max-width: 100px;
+            object-fit: contain;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 2rem;
+            position: relative;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #777;
+            background: none;
+            border: none;
+        }
+        
+        .close-modal:hover {
+            color: var(--accent);
+        }
+        
+        .amortization-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        .amortization-table th,
+        .amortization-table td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .amortization-table th {
+            background-color: #f5f5f5;
+            font-weight: 500;
+        }
+        
+        .amortization-table tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links, .auth-buttons {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .calculator-container {
+                flex-direction: column;
+            }
+            
+            .footer-column {
+                min-width: 100%;
+                margin-bottom: 1.5rem;
+            }
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="navbar">
+            <a href="#" class="logo">Pe<span>Fi</span></a>
+            
+            <div class="nav-links">
+                <a href="#calculator">Simulateur</a>
+                <a href="#features">Fonctionnalités</a>
+                <a href="#how-it-works">Comment ça marche</a>
+                <a href="#testimonials">Témoignages</a>
+                <a href="#contact">Contact</a>
+            </div>
+            
+            <div class="auth-buttons">
+                <a href="#" class="btn btn-login">Connexion</a>
+                <a href="#" class="btn btn-signup">Inscription</a>
+            </div>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1 class="fade-in">Financement collaboratif en Haïti</h1>
+        <p class="fade-in delay-1">Connectez-vous directement avec des prêteurs ou emprunteurs pour des solutions financières transparentes et accessibles.</p>
+        <div class="hero-buttons fade-in delay-2">
+            <a href="#" class="btn btn-primary">Je veux emprunter</a>
+            <a href="#" class="btn btn-secondary">Je veux prêter</a>
+        </div>
+    </section>
+    
+    <!-- Calculator Section -->
+    <section id="calculator" class="calculator-section">
+        <h2 class="section-title fade-in">Simulateur de Prêt</h2>
+        <div class="calculator-container fade-in delay-1">
+            <div class="calculator-form">
+                <div class="form-group">
+                    <label for="loan-amount">Montant du prêt (HTG)</label>
+                    <div class="range-container">
+                        <input type="range" id="loan-amount" min="10000" max="1000000" step="10000" value="200000" class="form-control">
+                        <span class="range-value" id="loan-amount-value">200,000 HTG</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="loan-term">Durée (mois)</label>
+                    <div class="range-container">
+                        <input type="range" id="loan-term" min="3" max="36" value="12" class="form-control">
+                        <span class="range-value" id="loan-term-value">12 mois</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="interest-rate">Taux d'intérêt (%)</label>
+                    <div class="range-container">
+                        <input type="range" id="interest-rate" min="5" max="30" step="0.5" value="12" class="form-control">
+                        <span class="range-value" id="interest-rate-value">12%</span>
+                    </div>
+                </div>
+                
+                <button id="calculate-btn" class="btn-calculate">Calculer</button>
+            </div>
+            
+            <div class="calculator-results">
+                <h3>Résultats de la simulation</h3>
+                <div class="result-item">
+                    <span class="result-label">Mensualité:</span>
+                    <span class="result-value" id="monthly-payment">17,770 HTG</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Total à rembourser:</span>
+                    <span class="result-value" id="total-repayment">213,240 HTG</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">Coût total du crédit:</span>
+                    <span class="result-value" id="total-interest">13,240 HTG</span>
+                </div>
+                
+                <button id="show-amortization" class="amortization-btn">
+                    <i class="fas fa-table"></i> Voir le tableau d'amortissement
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <h2 class="section-title fade-in">Nos Fonctionnalités</h2>
+        <div class="features-grid">
+            <div class="feature-card fade-in delay-1">
+                <div class="feature-icon">
+                    <i class="fas fa-calculator"></i>
+                </div>
+                <h3 class="feature-title">Simulation de prêt</h3>
+                <p>Estimez vos mensualités en fonction du montant, durée et taux d'intérêt.</p>
+            </div>
+            
+            <div class="feature-card fade-in delay-2">
+                <div class="feature-icon">
+                    <i class="fas fa-table"></i>
+                </div>
+                <h3 class="feature-title">Tableau d'amortissement</h3>
+                <p>Visualisez le détail de chaque échéance avec capital et intérêts.</p>
+            </div>
+            
+            <div class="feature-card fade-in delay-1">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3 class="feature-title">Sécurité KYC</h3>
+                <p>Vérification d'identité pour assurer la sécurité des transactions.</p>
+            </div>
+            
+            <div class="feature-card fade-in delay-2">
+                <div class="feature-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <h3 class="feature-title">Support 24/7</h3>
+                <p>Assistance en direct par chat, email ou téléphone.</p>
+            </div>
+            
+            <div class="feature-card fade-in delay-1">
+                <div class="feature-icon">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <h3 class="feature-title">Alertes personnalisées</h3>
+                <p>Notifications pour échéances, nouveaux prêts et messages.</p>
+            </div>
+            
+            <div class="feature-card fade-in delay-2">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3 class="feature-title">Espace communautaire</h3>
+                <p>Échangez avec d'autres membres et accédez à des ressources éducatives.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- How It Works -->
+    <section id="how-it-works" class="how-it-works">
+        <h2 class="section-title fade-in">Comment ça marche</h2>
+        <div class="steps">
+            <div class="step fade-in delay-1">
+                <div class="step-number">1</div>
+                <h3>Créez votre compte</h3>
+                <p>Inscrivez-vous en quelques minutes et complétez votre profil.</p>
+            </div>
+            
+            <div class="step fade-in delay-2">
+                <div class="step-number">2</div>
+                <h3>Simulez votre prêt</h3>
+                <p>Utilisez notre outil pour trouver la solution adaptée à vos besoins.</p>
+            </div>
+            
+            <div class="step fade-in delay-1">
+                <div class="step-number">3</div>
+                <h3>Soumettez votre demande</h3>
+                <p>Envoyez votre demande de prêt ou choisissez un projet à financer.</p>
+            </div>
+            
+            <div class="step fade-in delay-2">
+                <div class="step-number">4</div>
+                <h3>Recevez les fonds</h3>
+                <p>Une fois approuvé, les fonds sont transférés directement sur votre compte.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials -->
+    <section id="testimonials" class="testimonials">
+        <h2 class="section-title fade-in">Ce que disent nos utilisateurs</h2>
+        <div class="testimonial-grid">
+            <div class="testimonial-card fade-in delay-1">
+                <p class="testimonial-text">"Grâce à PeFi, j'ai pu obtenir un prêt pour développer mon commerce alors que les banques traditionnelles m'avaient refusé. Le processus est simple et transparent."</p>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Marie L." class="author-avatar">
+                    <div class="author-info">
+                        <h4>Marie L.</h4>
+                        <p>Commerçante, Port-au-Prince</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card fade-in delay-2">
+                <p class="testimonial-text">"Je prête régulièrement sur PeFi et j'obtiens de bien meilleurs rendements qu'avec un compte épargne classique. La plateforme est sécurisée et fiable."</p>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Jean P." class="author-avatar">
+                    <div class="author-info">
+                        <h4>Jean P.</h4>
+                        <p>Investisseur, Pétion-Ville</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card fade-in delay-1">
+                <p class="testimonial-text">"Le tableau d'amortissement détaillé m'a permis de bien planifier mon budget. Le service client a répondu rapidement à mes questions."</p>
+                <div class="testimonial-author">
+                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Sophie D." class="author-avatar">
+                    <div class="author-info">
+                        <h4>Sophie D.</h4>
+                        <p>Professionnelle, Cap-Haïtien</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3 class="footer-title">PeFi</h3>
+                <p>La première plateforme de prêt peer-to-peer en Haïti, connectant directement emprunteurs et prêteurs pour des solutions financières innovantes.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="footer-title">Liens rapides</h3>
+                <ul class="footer-links">
+                    <li><a href="#calculator">Simulateur de prêt</a></li>
+                    <li><a href="#features">Fonctionnalités</a></li>
+                    <li><a href="#how-it-works">Comment ça marche</a></li>
+                    <li><a href="#testimonials">Témoignages</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="footer-title">Support</h3>
+                <ul class="footer-links">
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Centre d'aide</a></li>
+                    <li><a href="#">Nous contacter</a></li>
+                    <li><a href="#">Politique de confidentialité</a></li>
+                    <li><a href="#">Conditions d'utilisation</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3 class="footer-title">Contact</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Avenue Christophe, Port-au-Prince</li>
+                    <li><i class="fas fa-phone"></i> +509 34 00 0000</li>
+                    <li><i class="fas fa-envelope"></i> contact@pefiht.com</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="partner-logos">
+            <h4 class="partner-title">Nos partenaires financiers</h4>
+            <div class="logo-grid">
+                <!-- Banques Haïtiennes -->
+                <div class="logo-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Unibank_logo.svg/1200px-Unibank_logo.svg.png" alt="Unibank">
+                </div>
+                <div class="logo-item">
+                    <img src="https://www.sogebank.com/wp-content/uploads/2021/04/logo-sogebank.png" alt="Sogebank">
+                </div>
+                <div class="logo-item">
+                    <img src="https://www.bnconline.com/wp-content/uploads/2020/04/BNC-Logo.png" alt="BNC">
+                </div>
+                <div class="logo-item">
+                    <img src="https://www.capitalbank.com.ht/wp-content/uploads/2021/03/capital-bank-logo.png" alt="Capital Bank">
+                </div>
+                
+                <!-- Services de paiement -->
+                <div class="logo-item">
+                    <img src="https://www.digicelgroup.com/haiti/static/digicelhaiti/images/moncash-logo.png" alt="MonCash">
+                </div>
+                <div class="logo-item">
+                    <img src="https://natcash.com/wp-content/uploads/2021/05/natcash-logo.png" alt="NatCash">
+                </div>
+                <div class="logo-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Wise_former_logo.png/640px-Wise_former_logo.png" alt="Wise">
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2023 PeFi Haïti. Tous droits réservés.</p>
+        </div>
+    </footer>
+    
+    <!-- Amortization Modal -->
+    <div id="amortization-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-modal">&times;</button>
+            <h2>Tableau d'amortissement</h2>
+            <table class="amortization-table">
+                <thead>
+                    <tr>
+                        <th>Période</th>
+                        <th>Mensualité</th>
+                        <th>Capital</th>
+                        <th>Intérêts</th>
+                        <th>Capital restant</th>
+                    </tr>
+                </thead>
+                <tbody id="amortization-body">
+                    <!-- Rempli par JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script>
+        // Gestion des sliders
+        const loanAmountSlider = document.getElementById('loan-amount');
+        const loanTermSlider = document.getElementById('loan-term');
+        const interestRateSlider = document.getElementById('interest-rate');
+        
+        const loanAmountValue = document.getElementById('loan-amount-value');
+        const loanTermValue = document.getElementById('loan-term-value');
+        const interestRateValue = document.getElementById('interest-rate-value');
+        
+        // Éléments de résultats
+        const monthlyPaymentEl = document.getElementById('monthly-payment');
+        const totalRepaymentEl = document.getElementById('total-repayment');
+        const totalInterestEl = document.getElementById('total-interest');
+        
+        // Modal
+        const amortizationModal = document.getElementById('amortization-modal');
+        const showAmortizationBtn = document.getElementById('show-amortization');
+        const closeModalBtn = document.querySelector('.close-modal');
+        const amortizationBody = document.getElementById('amortization-body');
+        
+        // Formater les nombres en HTG
+        function formatHTG(number) {
+            return new Intl.NumberFormat('fr-HT', {
+                style: 'decimal',
+                maximumFractionDigits: 0
+            }).format(number) + ' HTG';
+        }
+        
+        // Mettre à jour les valeurs des sliders
+        function updateSliderValues() {
+            loanAmountValue.textContent = formatHTG(parseInt(loanAmountSlider.value));
+            loanTermValue.textContent = `${loanTermSlider.value} mois`;
+            interestRateValue.textContent = `${interestRateSlider.value}%`;
+            
+            calculateLoan();
+        }
+        
+        // Calculer le prêt
+        function calculateLoan() {
+            const amount = parseInt(loanAmountSlider.value);
+            const term = parseInt(loanTermSlider.value);
+            const rate = parseFloat(interestRateSlider.value) / 100 / 12; // Taux mensuel
+            
+            // Calcul de la mensualité (formule amortissement)
+            const monthlyPayment = rate === 0 ? 
+                amount / term : 
+                amount * (rate * Math.pow(1 + rate, term)) / (Math.pow(1 + rate, term) - 1);
+            
+            const totalRepayment = monthlyPayment * term;
+            const totalInterest = totalRepayment - amount;
+            
+            // Mise à jour de l'UI
+            monthlyPaymentEl.textContent = formatHTG(Math.round(monthlyPayment));
+            totalRepaymentEl.textContent = formatHTG(Math.round(totalRepayment));
+            totalInterestEl.textContent = formatHTG(Math.round(totalInterest));
+            
+            // Générer le tableau d'amortissement
+            generateAmortizationTable(amount, term, rate, monthlyPayment);
+        }
+        
+        // Générer le tableau d'amortissement
+        function generateAmortizationTable(amount, term, monthlyRate, monthlyPayment) {
+            let balance = amount;
+            let html = '';
+            
+            for (let i = 1; i <= term; i++) {
+                const interest = balance * monthlyRate;
+                const principal = monthlyPayment - interest;
+                balance -= principal;
+                
+                // Ajuster le solde final pour éviter les arrondis
+                if (i === term) {
+                    balance = 0;
+                }
+                
+                html += `
+                    <tr>
+                        <td>${i}</td>
+                        <td>${formatHTG(Math.round(monthlyPayment))}</td>
+                        <td>${formatHTG(Math.round(principal))}</td>
+                        <td>${formatHTG(Math.round(interest))}</td>
+                        <td>${formatHTG(Math.round(balance))}</td>
+                    </tr>
+                `;
+            }
+            
+            amortizationBody.innerHTML = html;
+        }
+        
+        // Événements
+        loanAmountSlider.addEventListener('input', updateSliderValues);
+        loanTermSlider.addEventListener('input', updateSliderValues);
+        interestRateSlider.addEventListener('input', updateSliderValues);
+        
+        showAmortizationBtn.addEventListener('click', () => {
+            amortizationModal.style.display = 'flex';
+        });
+        
+        closeModalBtn.addEventListener('click', () => {
+            amortizationModal.style.display = 'none';
+        });
+        
+        window.addEventListener('click', (e) => {
+            if (e.target === amortizationModal) {
+                amortizationModal.style.display = 'none';
+            }
+        });
+        
+        // Mobile menu toggle (à implémenter)
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+        
+        // Initialisation
+        updateSliderValues();
+        
+        // Animation au scroll
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        function checkScroll() {
+            fadeElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementTop < windowHeight - 100) {
+                    element.style.opacity = 1;
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', checkScroll);
+        window.addEventListener('load', checkScroll);
+    </script>
+</body>
+</html>
